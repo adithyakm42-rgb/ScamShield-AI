@@ -1,0 +1,4 @@
+Bundled SMS spam model: TF-IDF + Logistic Regression.
+Serialized with scikit-learn 1.9.1 and joblib.
+The model was trained using train_message.py on the UCI SMS Spam Collection.
+Use the pinned scikit-learn version in requirements.txt when loading this artifact.

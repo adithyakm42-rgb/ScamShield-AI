@@ -1,0 +1,1 @@
+No software license is included. Add a license only after deciding how you want others to use this project. The UCI SMS Spam Collection and dependencies have separate terms.
