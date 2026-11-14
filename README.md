@@ -1,115 +1,137 @@
+
 # 🛡️ ScamShield AI
 
-**Detect. Analyse. Protect.**
+### AI-Powered SMS and URL Scam Detection System
 
-ScamShield AI is an educational digital-safety screening prototype. It checks website URL patterns and uses a machine-learning model to estimate whether an SMS resembles spam. It is not a bank security system or a verified fraud-detection service.
+ScamShield AI is a beginner-friendly cybersecurity project that helps users identify suspicious SMS messages and potentially unsafe URLs using machine learning and rule-based analysis.
 
-## Features
+## 🚀 Features
 
-- **URL screening:** checks URL structure, HTTP vs HTTPS, IP-address hosts, shortened domains, punycode labels, unusual ports, sensitive wording and gambling/betting-related wording.
-- **AI message screening:** TF-IDF + Logistic Regression model trained on the UCI SMS Spam Collection.
-- **Readable dashboard:** high-contrast light theme, summary metrics and simple navigation.
-- **SQLite history:** stores scans locally, with search, filters and CSV export.
-- **Safety guide:** practical advice for protecting personal and financial information.
+- **SMS Scam Detection:** Classifies messages as spam-like or normal using a trained machine learning model.
+- **URL Risk Analysis:** Checks URLs for suspicious patterns and risk indicators.
+- **Risk Scoring:** Displays a risk score and risk level.
+- **Warning Details:** Explains why a message or URL was flagged.
+- **Scan History:** Stores previous scans using SQLite.
+- **Analytics Dashboard:** Displays scan statistics.
+- **User-Friendly Interface:** Built with Streamlit.
 
-## Important limitations
+## 🧰 Technologies Used
 
-- The URL scanner works offline. It does not open submitted links or query a live phishing/reputation database.
-- URL scores are heuristic caution scores, not probabilities of fraud.
-- Gambling/betting words are category indicators, not proof that a website is fraudulent.
-- Advertising parameters such as `click_id`, `sub_id` and `utm_source` are common tracking fields; their presence alone does not prove a scam.
-- The message model estimates similarity to spam in its training dataset. It does not confirm financial fraud.
-- A low score does not mean a URL or message is safe.
+- Python
+- Streamlit
+- Scikit-learn
+- TF-IDF Vectorization
+- Logistic Regression
+- SQLite
+- Joblib
 
-Never enter passwords, OTPs, UPI PINs, card details or other secrets into this app.
-
-## Project structure
+## 📁 Project Structure
 
 ```text
 ScamShield-AI/
+│
 ├── app.py
 ├── url_scanner.py
 ├── predictor.py
-├── database.py
 ├── train_message.py
+├── database.py
 ├── requirements.txt
 ├── README.md
-├── .gitignore
-├── models/
-│   └── message_model.pkl
+├── LICENSE_NOTE.txt
+│
 ├── dataset/
 │   └── SMSSpamCollection
+│
+├── models/
+│   ├── message_model.pkl
+│   └── MODEL_INFO.txt
+│
 └── tests/
-    ├── test_url_scanner.py
+    ├── __init__.py
+    ├── test_database.py
     ├── test_predictor.py
-    └── test_database.py
+    └── test_url_scanner.py
 ```
 
-## Setup on Windows (PowerShell)
+## ⚙️ Installation
 
-1. Install Python 3.11 or newer.
-2. Open this project folder in VS Code.
-3. Create and activate a virtual environment:
+### 1. Clone the repository
 
-   ```powershell
-   python -m venv .venv
-   .\.venv\Scripts\Activate.ps1
-   ```
+```bash
+git clone https://github.com/adithyakm42-rgb/ScamShield-AI.git
+```
 
-4. Install dependencies:
+### 2. Open the project folder
 
-   ```powershell
-   python -m pip install --upgrade pip
-   pip install -r requirements.txt
-   ```
+```bash
+cd ScamShield-AI
+```
 
-5. Start the app:
+### 3. Create a virtual environment
 
-   ```powershell
-   python -m streamlit run app.py
-   ```
+```bash
+python -m venv .venv
+```
 
-The browser should open at `http://localhost:8501`.
+### 4. Activate the environment
 
-## Run tests
+Windows PowerShell:
 
 ```powershell
+.venv\Scripts\Activate.ps1
+```
+
+### 5. Install dependencies
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+## ▶️ Run the Application
+
+```bash
+python -m streamlit run app.py
+```
+
+Open the local URL displayed in your terminal, usually:
+
+```text
+http://localhost:8501
+```
+
+## 🧠 Machine Learning
+
+The SMS detection component uses:
+
+- TF-IDF for text feature extraction.
+- Logistic Regression for classification.
+- A trained model saved using Joblib.
+- The SMS Spam Collection dataset for training and evaluation.
+
+## 🧪 Run Tests
+
+```bash
 python -m unittest discover -s tests -v
 ```
 
-## Retrain the message model (optional)
+## ⚠️ Important Disclaimer
 
-The repository includes a trained model. To retrain it:
+ScamShield AI is an educational screening tool. Its predictions are not a guarantee that a message or URL is safe or fraudulent.
 
-```powershell
-python train_message.py
-```
+URL analysis uses rule-based indicators and does not independently verify website ownership or live reputation. Always verify suspicious links through official sources. Never share passwords, OTPs, or banking details through untrusted links.
 
-The script downloads the UCI dataset only if `dataset/SMSSpamCollection` is missing, trains the model and saves `models/message_model.pkl`.
+## 🎯 Project Objective
 
-## Dataset acknowledgement
+To demonstrate how machine learning and rule-based techniques can help users recognize suspicious digital messages and URLs.
 
-The SMS Spam Collection is provided by the UCI Machine Learning Repository:
-https://archive.ics.uci.edu/dataset/228/sms+spam+collection
+## 👨‍💻 Developer
 
-Cite the dataset in academic or public presentations and review its original terms before redistributing it.
+**Adithya K M**
 
-## GitHub publishing
+Data Science Engineering Student
 
-Before publishing, inspect the files and ensure no private data, credentials, local database, virtual environment or personal information is included.
+GitHub: https://github.com/adithyakm42-rgb
 
-```powershell
-git init
-git add .
-git status
-git commit -m "Initial release: ScamShield AI"
-git branch -M main
-git remote add origin https://github.com/YOUR-USERNAME/ScamShield-AI.git
-git push -u origin main
-```
+---
 
-Replace `YOUR-USERNAME` with your GitHub username. If a remote already exists, check it with `git remote -v` before adding another.
-
-## License
-
-Add a project license before allowing reuse. The dataset and third-party dependencies retain their own terms.
+⭐ If you find this project useful, consider giving it a star!
