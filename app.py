@@ -4,7 +4,7 @@ import io
 import streamlit as st
 
 import database
-from predictor import analyze_message
+from predictor import analyze_message, detect_warning_signs
 from url_scanner import analyze_url
 
 
@@ -549,33 +549,8 @@ def risk_group(score):
 
 
 def message_warning_signs(message):
-    text = message.lower()
-
-    groups = {
-        "Urgent language": [
-            "urgent", "immediately", "blocked", "suspended"
-        ],
-        "Banking or KYC wording": [
-            "kyc", "bank account", "upi"
-        ],
-        "Sensitive information": [
-            "otp", "password", "pin", "cvv"
-        ],
-        "Prize-related wording": [
-            "lottery", "winner", "claim prize"
-        ],
-    }
-
-    found = [
-        name
-        for name, words in groups.items()
-        if any(word in text for word in words)
-    ]
-
-    if "http://" in text or "https://" in text:
-        found.append("Contains a website link")
-
-    return found
+    """Use the multilingual warning rules defined in predictor.py."""
+    return detect_warning_signs(message)
 
 
 def gauge_colour(score):
@@ -1071,7 +1046,9 @@ with message_tab:
                     with st.spinner("Scanning message…"):
                         result = analyze_message(message_input)
 
-                    signs = message_warning_signs(message_input)
+                    signs = result.get("warning_signs")
+                    if signs is None:
+                        signs = message_warning_signs(message_input)
 
                     database.save_scan(
                         "Message",
@@ -1129,6 +1106,9 @@ with message_tab:
 
         st.markdown("### Model prediction")
         st.write(result["prediction"])
+
+        if result.get("script_indicator"):
+            st.caption(f"Text script indicator: {result['script_indicator']}")
 
         st.markdown("### ⚠️ Additional warning signs")
 
